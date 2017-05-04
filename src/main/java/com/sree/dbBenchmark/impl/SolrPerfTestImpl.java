@@ -2,6 +2,7 @@ package com.sree.dbBenchmark.impl;
 
 import com.sree.dbBenchmark.PerfTest;
 import com.sree.dbBenchmark.data.DagData;
+import com.sree.dbBenchmark.data.PerfData;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -48,13 +49,18 @@ public class SolrPerfTestImpl implements PerfTest{
     return document;
   }
 
-  public void writeData(List<DagData> dataList) throws SolrServerException, IOException {
+  public PerfData writeData(List<DagData> dataList) throws SolrServerException, IOException {
     // dataList.forEach(data -> solr.add(createDoc(data));
 
+    PerfData perfData = new PerfData();
     for(int i = 0; i < dataList.size(); i++) {
       solr.add(createDoc(dataList.get(i)));
     }
+    perfData.registerEvent();
     solr.commit();
+    perfData.registerEvent();
+
+    return perfData;
   }
 
   public void readData(){
