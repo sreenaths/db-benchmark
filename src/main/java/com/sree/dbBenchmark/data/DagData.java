@@ -48,6 +48,7 @@ public class DagData {
    return sb.toString();
   }
 
+  // This is dag is not big enough. A single DAG JSON can go upto .2million characters long, or more
   public DagData() {
     this.dagID = String.format("dag_%s_%s_%s", genNum(12), genNum(4), genNum(2));
     this.appID = String.format("application_%s_%s", genNum(12), genNum(4));
@@ -79,3 +80,4 @@ public class DagData {
   }
 
 }
+

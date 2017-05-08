@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SolrPerfTestImpl implements PerfTest{
 
-  SolrClient solr = new HttpSolrClient.Builder("http://172.22.76.27:8983/solr/dag").build();
+  SolrClient solr = new HttpSolrClient.Builder("http://172.27.48.128:8983/solr/dag").build();
 
   private static SolrInputDocument createDoc(DagData dag) {
     SolrInputDocument document = new SolrInputDocument();
@@ -50,7 +50,6 @@ public class SolrPerfTestImpl implements PerfTest{
   }
 
   public PerfData writeData(List<DagData> dataList) throws SolrServerException, IOException {
-    // dataList.forEach(data -> solr.add(createDoc(data));
 
     PerfData perfData = new PerfData();
     for(int i = 0; i < dataList.size(); i++) {
