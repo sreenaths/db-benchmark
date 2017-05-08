@@ -5,15 +5,16 @@ import com.sree.dbBenchmark.data.PerfData;
 import org.apache.solr.client.solrj.SolrServerException;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tests {
 
-  private static int BATCH_COUNT = 10;
-  private static int BATCH_SIZE = 500;
+  private static int BATCH_COUNT = 1;
+  private static int BATCH_SIZE = 1;
 
-  public void writeTests(PerfTest perfTest) throws IOException, SolrServerException {
+  public void writeTests(PerfTest perfTest) throws IOException, SolrServerException, SQLException {
     System.out.printf("-- Starting incremental write test : %dx%d--\n", BATCH_COUNT, BATCH_SIZE);
     PerfData totalPerfData = new PerfData();
 

@@ -9,6 +9,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.common.SolrInputDocument;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class SolrPerfTestImpl implements PerfTest{
@@ -49,7 +50,7 @@ public class SolrPerfTestImpl implements PerfTest{
     return document;
   }
 
-  public PerfData writeData(List<DagData> dataList) throws SolrServerException, IOException {
+  public PerfData writeData(List<DagData> dataList) throws SQLException, SolrServerException, IOException {
 
     PerfData perfData = new PerfData();
     for(int i = 0; i < dataList.size(); i++) {
