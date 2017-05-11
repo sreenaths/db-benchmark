@@ -4,8 +4,12 @@ import com.sree.dbBenchmark.PerfTest;
 import com.sree.dbBenchmark.data.DagData;
 import com.sree.dbBenchmark.data.PerfData;
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import java.io.IOException;
@@ -19,6 +23,7 @@ public class SolrPerfTestImpl implements PerfTest{
   private static SolrInputDocument createDoc(DagData dag) {
     SolrInputDocument document = new SolrInputDocument();
 
+    // Indexed
     document.addField("id", dag.dagID);
     document.addField("appID", dag.appID);
     document.addField("appAttemptID", dag.appAttemptID);
@@ -26,17 +31,23 @@ public class SolrPerfTestImpl implements PerfTest{
 
     document.addField("dagName", dag.dagName);
     document.addField("queueName", dag.queueName);
+    document.addField("user", dag.userName);
 
-    document.addField("user", dag.user);
     document.addField("status", dag.status);
-    document.addField("logURL", dag.logURL);
-    document.addField("callerContextType", dag.callerContextType);
+
+    document.addField("tablesWritten", dag.tablesWritten);
+    document.addField("queryText", dag.queryText);
+    document.addField("isDDL", dag.isDDL);
 
     document.addField("submitTime", dag.submitTime);
     document.addField("startTime", dag.startTime);
     document.addField("initTime", dag.initTime);
     document.addField("finishTime", dag.finishTime);
     document.addField("timeTaken", dag.timeTaken);
+
+    // Not Indexed
+    document.addField("logURL", dag.logURL);
+    document.addField("callerContextType", dag.callerContextType);
 
     document.addField("amWebServiceVersion", dag.amWebServiceVersion);
     document.addField("tezVersion", dag.tezVersion);
@@ -63,8 +74,66 @@ public class SolrPerfTestImpl implements PerfTest{
     return perfData;
   }
 
-  public void readData(){
+  public PerfData readDataWithSort(String query, Integer rows) throws SQLException, IOException, SolrServerException {
+    SolrQuery solrQuery = new SolrQuery();
+    solrQuery.setQuery(query);
+    solrQuery.addFilterQuery(query);
+    solrQuery.setFields("id", "appID", "appAttemptID", "callerContextID", "dagName, queueName", "user", "status", "logURL", "callerContextType", "submitTime", "startTime", "initTime", "finishTime", "timeTaken");
+    solrQuery.setStart(0);
+    solrQuery.setRows(rows);
+    solrQuery.setSort("timeTaken", SolrQuery.ORDER.desc);
 
+    PerfData perfData = new PerfData();
+
+    QueryResponse response = solr.query(solrQuery);
+    SolrDocumentList result = response.getResults();
+
+    perfData.data = result.size();
+    perfData.registerEvent();
+
+    return perfData;
+  }
+
+  public PerfData readData(String query, Integer rows) throws SQLException, IOException, SolrServerException {
+    SolrQuery solrQuery = new SolrQuery();
+    solrQuery.setQuery(query);
+    solrQuery.addFilterQuery(query);
+    solrQuery.setFields("id", "appID", "appAttemptID", "callerContextID", "dagName, queueName", "user", "status", "logURL", "callerContextType", "submitTime", "startTime", "initTime", "finishTime", "timeTaken");
+    solrQuery.setStart(0);
+    solrQuery.setRows(rows);
+
+    PerfData perfData = new PerfData();
+
+    QueryResponse response = solr.query(solrQuery);
+    SolrDocumentList result = response.getResults();
+
+    perfData.data = result.size();
+    perfData.registerEvent();
+
+    return perfData;
+  }
+
+  public PerfData getFacet() throws SQLException, IOException, SolrServerException {
+    SolrQuery solrQuery = new SolrQuery();
+    solrQuery.setQuery("user:userName1");
+    solrQuery.addFilterQuery("user:userName1");
+    solrQuery.setStart(0);
+    solrQuery.setRows(0);
+    solrQuery.setFacet(true);
+    solrQuery.addFacetField("status", "queueName", "isDDL", "tablesWritten");
+
+    PerfData perfData = new PerfData();
+
+    QueryResponse response = solr.query(solrQuery);
+    List<FacetField> result = response.getFacetFields();
+
+    perfData.data = result.get(0).getValueCount() + result.get(1).getValueCount() + result.get(2).getValueCount() + result.get(3).getValueCount();
+    perfData.registerEvent();
+
+    return perfData;
+  }
+
+  public void close() throws SQLException {
   }
 
 }

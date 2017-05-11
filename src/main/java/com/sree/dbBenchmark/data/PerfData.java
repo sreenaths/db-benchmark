@@ -7,6 +7,8 @@ public class PerfData {
 
   private List<Long> events = new ArrayList<Long>();
 
+  public long data;
+
   public PerfData() {
     registerEvent();
   }

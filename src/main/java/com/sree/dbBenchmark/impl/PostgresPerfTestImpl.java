@@ -8,11 +8,22 @@ import org.apache.solr.client.solrj.SolrServerException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PostgresPerfTestImpl implements PerfTest{
+
+  private Connection postgres;
+
+  public static final String[] FIELDS = {"dagID", "appID", "appAttemptID", "callerContextID", "dagName, queueName", "user", "status", "logURL", "callerContextType", "submitTime", "startTime", "initTime", "finishTime", "timeTaken"};
+
+  public PostgresPerfTestImpl() {
+    postgres = getConnection();
+  }
 
   private Connection getConnection() {
     Connection postgres = null;
@@ -32,22 +43,27 @@ public class PostgresPerfTestImpl implements PerfTest{
     String sql = "INSERT INTO dag (" +
 
         "dagID, appID, appAttemptID, callerContextID, " +
-        "dagName, queueName, " +
-        "user, status, logURL, callerContextType, " +
-        "submitTime, startTime, initTime, finishTime, timeTaken" +
+        "dagName, queueName, userName, " +
+        "status, " +
+        "tablesWritten, queryText, isDDL, " +
+        "submitTime, startTime, initTime, finishTime, timeTaken, " +
+        "logURL, callerContextType, " +
         "amWebServiceVersion, tezVersion, " +
-        "dagPlan, vertexNameIdMap, diagnostics, counters, taskStats)" +
+        "dagPlan, vertexNameIdMap, diagnosticsTxt, counters, taskStats)" +
 
         " VALUES (" +
 
-        "'%s', '%s', '%s', '%s'," +
-        "'%s', '%s'" +
-        "'%s', '%s', '%s', '%s'" +
-        "'%s', '%s', '%s', '%s'" +
-        "'%s', '%s'" +
+        "'%s', '%s', '%s', '%s', " +
+        "'%s', '%s', '%s', " +
+        "'%s', " +
+        "%s, '%s', %b, " +
+        "'%s', '%s', '%s', '%s', '%s', " +
+        "'%s', '%s', " +
+        "'%s', '%s', " +
         "'%s', '%s', '%s', '%s', '%s')";
 
-    return String.format(sql,
+    sql = String.format(sql,
+        // Indexed
         dag.dagID,
         dag.appID,
         dag.appAttemptID,
@@ -55,17 +71,23 @@ public class PostgresPerfTestImpl implements PerfTest{
 
         dag.dagName,
         dag.queueName,
+        dag.userName,
 
-        dag.user,
         dag.status,
-        dag.logURL,
-        dag.callerContextType,
+
+        "ARRAY['" + String.join("','", dag.tablesWritten) + "']",
+        dag.queryText.replace("'", "''"),
+        dag.isDDL,
 
         dag.submitTime,
         dag.startTime,
         dag.initTime,
         dag.finishTime,
         dag.timeTaken,
+
+        // Not Indexed
+        dag.logURL,
+        dag.callerContextType,
 
         dag.amWebServiceVersion,
         dag.tezVersion,
@@ -76,12 +98,13 @@ public class PostgresPerfTestImpl implements PerfTest{
         dag.counters,
         dag.taskStats
         );
+
+    return sql;
   }
 
   public PerfData writeData(List<DagData> dataList) throws SQLException, SolrServerException, IOException {
 
-    Connection cn = getConnection();
-    Statement stmt = cn.createStatement();
+    Statement stmt = postgres.createStatement();
 
     PerfData perfData = new PerfData();
     for(int i = 0; i < dataList.size(); i++) {
@@ -89,16 +112,61 @@ public class PostgresPerfTestImpl implements PerfTest{
     }
     perfData.registerEvent();
     stmt.close();
-    cn.commit();
-    cn.close();
+    postgres.commit();
     perfData.registerEvent();
 
     return perfData;
-
   }
 
-  public void readData(){
+  public PerfData readData(String query, Integer rows) throws SQLException, IOException, SolrServerException{
+    PerfData perfData = new PerfData();
 
+    Statement stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+    ResultSet result = stmt.executeQuery( String.format("SELECT %s FROM dag WHERE %s LIMIT %d;", String.join(", ", FIELDS), query, rows));
+
+    result.last();
+    perfData.data = result.getRow();
+
+    stmt.close();
+    perfData.registerEvent();
+
+    return perfData;
+  }
+
+  public PerfData getFacet() throws SQLException, IOException, SolrServerException {
+    PerfData perfData = new PerfData();
+    ResultSet result;
+
+    perfData.data = 0;
+
+    Statement stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+    result = stmt.executeQuery("select count(1) as cnt, status from dag where userName='userName1' GROUP BY status ORDER BY cnt DESC");
+    result.last();
+    perfData.data += result.getRow();
+
+    stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+    result = stmt.executeQuery("select count(1) as cnt, queueName from dag where userName='userName1' GROUP BY queueName ORDER BY cnt DESC");
+    result.last();
+    perfData.data += result.getRow();
+
+    stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+    result = stmt.executeQuery("select count(1) as cnt, isDDL from dag where userName='userName1' GROUP BY isDDL ORDER BY cnt DESC");
+    result.last();
+    perfData.data += result.getRow();
+
+    stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+    result = stmt.executeQuery("select count(1) as cnt, tablesWritten from dag where userName='userName1' GROUP BY tablesWritten ORDER BY cnt DESC");
+    result.last();
+    perfData.data += result.getRow();
+
+    stmt.close();
+    perfData.registerEvent();
+
+    return perfData;
+  }
+
+  public void close() throws SQLException {
+    postgres.close();
   }
 
 }

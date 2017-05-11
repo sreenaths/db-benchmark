@@ -7,17 +7,24 @@ import org.apache.solr.client.solrj.SolrServerException;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-  public static void main(String args[]) throws IOException, SolrServerException, SQLException {
+  public static void main(String args[]) throws InterruptedException, IOException, SolrServerException, SQLException {
     System.out.println("-- Starting Tests --");
 
     Tests tests = new Tests();
 
-//    PerfTest perfTest = new SolrPerfTestImpl();
-    PerfTest perfTest = new PostgresPerfTestImpl();
+    List<PerfTest> perfTests = new ArrayList<PerfTest>();
+    perfTests.add(new SolrPerfTestImpl());
+    perfTests.add(new PostgresPerfTestImpl());
 
-    tests.writeTests(perfTest);
+    tests.writeTests(perfTests);
+
+    tests.readTests(perfTests);
+
+    perfTests.get(1).close();
 
     System.out.println("----- End Tests -----");
   }

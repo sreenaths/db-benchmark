@@ -414,7 +414,7 @@
   <field name="appAttemptID" type="string" indexed="true" stored="true"/>
   <field name="appID" type="string" indexed="true" stored="true"/>
   <field name="callerContextID" type="string" indexed="true" stored="true"/>
-  <field name="callerContextType" type="string" indexed="true" stored="true"/>
+  <field name="callerContextType" type="string" indexed="false" stored="true"/>
   <field name="counters" type="string" indexed="false" stored="true"/>
   <field name="dagID" type="string" indexed="true" stored="true"/>
   <field name="dagName" type="string" indexed="true" stored="true"/>
@@ -423,12 +423,15 @@
   <field name="finishTime" type="tdate" indexed="true" stored="true"/>
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="initTime" type="tdate" indexed="true" stored="true"/>
+  <field name="isDDL" type="boolean" indexed="true" stored="true"/>
   <field name="logURL" type="string" indexed="false" stored="true"/>
   <field name="name" type="string" indexed="true" stored="true"/>
+  <field name="queryText" type="text_ws" indexed="true" stored="true"/>
   <field name="queueName" type="string" indexed="true" stored="true"/>
   <field name="startTime" type="tdate" indexed="true" stored="true"/>
   <field name="status" type="string" indexed="true" stored="true"/>
   <field name="submitTime" type="tdate" indexed="true" stored="true"/>
+  <field name="tablesWritten" type="string" multiValued="true" indexed="true" stored="true"/>
   <field name="taskStats" type="string" indexed="false" stored="true"/>
   <field name="tezVersion" type="string" indexed="false" stored="true"/>
   <field name="timeTaken" type="tint" indexed="true" stored="true"/>
