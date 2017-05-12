@@ -73,7 +73,7 @@ public class Tests {
     System.out.println("2. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned");
     for(int i=0; i<DagData.STATUSES.size(); i++ ) {
       String status = DagData.STATUSES.get(i);
-      PerfData perfDataS = perfTests.get(0).readData(String.format("-status:%s", status), 100);
+      PerfData perfDataS = perfTests.get(0).readData(String.format("status:%s", status), 100);
       PerfData perfDataP = perfTests.get(1).readData(String.format("status = '%s'", status), 100);
 
       System.out.printf("%d, %d, %d, %d, %d\n", i, perfDataS.getTotalDelay(), perfDataS.data, perfDataP.getTotalDelay(), perfDataP.data);
@@ -82,7 +82,7 @@ public class Tests {
     System.out.println("3. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned");
     for(int i=0; i<DagData.STATUSES.size(); i++ ) {
       String status = DagData.STATUSES.get(i);
-      PerfData perfDataS = perfTests.get(0).readData(String.format("status:%s", status), 10);
+      PerfData perfDataS = perfTests.get(0).readData(String.format("-status:%s", status), 10);
       PerfData perfDataP = perfTests.get(1).readData(String.format("status != '%s'", status), 10);
 
       System.out.printf("%d, %d, %d, %d, %d\n", i, perfDataS.getTotalDelay(), perfDataS.data, perfDataP.getTotalDelay(), perfDataP.data);
@@ -157,7 +157,6 @@ public class Tests {
 
       System.out.printf("%d, %d, %d, %d, %d\n", i, perfDataS.getTotalDelay(), perfDataS.data, perfDataP.getTotalDelay(), perfDataP.data);
     }
-    // -- Pattern match --
     // 12. Query text containing pattern - "%RDER B%" (Broken words)
     System.out.println("12. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned");
     for(int i=0; i<10; i++ ) {
@@ -166,7 +165,6 @@ public class Tests {
 
       System.out.printf("%d, %d, %d, %d, %d\n", i, perfDataS.getTotalDelay(), perfDataS.data, perfDataP.getTotalDelay(), perfDataP.data);
     }
-    // -- Pattern match --
     // 13. Query text containing pattern - "%RDER%" (Broken word)
     System.out.println("13. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned");
     for(int i=0; i<10; i++ ) {

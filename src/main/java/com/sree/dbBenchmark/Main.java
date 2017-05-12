@@ -20,7 +20,7 @@ public class Main {
     perfTests.add(new SolrPerfTestImpl());
     perfTests.add(new PostgresPerfTestImpl());
 
-    tests.writeTests(perfTests);
+ //   tests.writeTests(perfTests);
 
     tests.readTests(perfTests);
 

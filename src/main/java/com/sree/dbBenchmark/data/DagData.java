@@ -85,7 +85,7 @@ public class DagData {
     return String.format("dag_%s", genNum(10));
   }
 
-  // This is dag is not big enough. A single DAG JSON can go upto .2million characters long, or more
+  // This dag is not big enough. A single DAG JSON can go upto .2million characters or more
   public DagData() {
     long currentTime = System.currentTimeMillis();
     long timeTaken = random.nextInt(20 * 60 * 1000); // 0 to 20min

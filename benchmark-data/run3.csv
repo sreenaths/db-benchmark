@@ -1,0 +1,190 @@
+-- Starting Tests --
+1. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 305, 10, 41, 10
+1, 10, 10, 2, 10
+2, 15, 10, 1, 10
+3, 24, 10, 2, 10
+4, 15, 10, 1, 10
+5, 24, 10, 1, 10
+6, 23, 10, 1, 10
+7, 20, 10, 1, 10
+8, 15, 10, 1, 10
+9, 15, 10, 28, 10
+2. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 282, 100, 22, 100
+1, 233, 100, 4, 100
+2, 110, 100, 4, 100
+3, 68, 100, 3, 100
+4, 68, 100, 3, 100
+5, 82, 100, 12, 100
+6, 60, 100, 2, 100
+7, 65, 100, 4, 100
+8, 53, 100, 3, 100
+3. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 98, 10, 2, 10
+1, 61, 10, 1, 10
+2, 87, 10, 1, 10
+3, 61, 10, 1, 10
+4, 88, 10, 1, 10
+5, 85, 10, 1, 10
+6, 86, 10, 2, 10
+7, 86, 10, 1, 10
+8, 87, 10, 11, 10
+4. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 59, 10, 18, 10
+1, 4, 10, 1, 10
+2, 3, 10, 1, 10
+3, 4, 10, 1, 10
+4, 3, 10, 1, 10
+5. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 36, 10, 2, 10
+1, 31, 10, 2, 10
+2, 32, 10, 1, 10
+3, 25, 10, 1, 10
+4, 29, 10, 1, 10
+5, 22, 10, 1, 10
+6, 20, 10, 1, 10
+7, 20, 10, 1, 10
+8, 19, 10, 1, 10
+9, 31, 10, 2, 10
+6. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 51, 10, 2, 10
+1, 22, 10, 1, 10
+2, 20, 10, 2, 10
+3, 17, 10, 2, 10
+4, 18, 10, 1, 10
+5, 14, 10, 1, 10
+6, 21, 10, 1, 10
+7, 16, 10, 1, 10
+8, 14, 10, 1, 10
+9, 22, 10, 1, 10
+7. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 15, 10, 9, 10
+1, 85, 10, 1, 10
+2, 4, 10, 1, 10
+3, 3, 10, 1, 10
+4, 4, 10, 1, 10
+5, 4, 10, 1, 10
+6, 3, 10, 2, 10
+7, 3, 10, 1, 10
+8, 3, 10, 2, 10
+9, 3, 10, 1, 10
+8. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+1, 27, 10, 2, 10
+2, 10, 10, 1, 10
+3, 9, 10, 1, 10
+4, 8, 10, 1, 10
+5, 8, 10, 0, 10
+6, 13, 10, 1, 10
+7, 12, 10, 1, 10
+8, 12, 10, 0, 10
+9, 9, 10, 1, 10
+9. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+1, 132, 10, 2, 10
+2, 128, 10, 1, 10
+3, 104, 10, 1, 10
+4, 104, 10, 1, 10
+5, 131, 10, 1, 10
+6, 127, 10, 2, 10
+7, 132, 10, 1, 10
+8, 132, 10, 1, 10
+9, 129, 10, 1, 10
+10. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+1, 11, 10, 18, 10
+2, 8, 10, 1, 10
+3, 12, 10, 2, 10
+4, 10, 10, 1, 10
+5, 8, 10, 2, 10
+6, 12, 10, 1, 10
+7, 13, 10, 1, 10
+8, 14, 10, 1, 10
+9, 14, 10, 1, 10
+11. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 123, 10, 1, 10
+1, 4, 10, 1, 10
+2, 4, 10, 1, 10
+3, 4, 10, 1, 10
+4, 3, 10, 1, 10
+5, 3, 10, 1, 10
+6, 3, 10, 1, 10
+7, 3, 10, 1, 10
+8, 3, 10, 1, 10
+9, 3, 10, 1, 10
+12. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 26, 10, 2, 10
+1, 4, 10, 1, 10
+2, 3, 10, 1, 10
+3, 4, 10, 1, 10
+4, 3, 10, 1, 10
+5, 3, 10, 1, 10
+6, 3, 10, 1, 10
+7, 4, 10, 0, 10
+8, 3, 10, 1, 10
+9, 4, 10, 1, 10
+13. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 22, 10, 1, 10
+1, 4, 10, 1, 10
+2, 4, 10, 0, 10
+3, 5, 10, 0, 10
+4, 4, 10, 1, 10
+5, 3, 10, 1, 10
+6, 4, 10, 1, 10
+7, 3, 10, 1, 10
+8, 3, 10, 1, 10
+9, 4, 10, 1, 10
+14. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+1, 261, 10, 30, 10
+2, 176, 10, 1, 10
+3, 176, 10, 1, 10
+4, 177, 10, 1, 10
+5, 150, 10, 4, 10
+6, 150, 10, 2, 10
+7, 148, 10, 1, 10
+8, 176, 10, 2, 10
+9, 165, 10, 1, 10
+15. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 41, 10, 2, 10
+1, 43, 10, 2, 10
+2, 44, 10, 1, 10
+3, 38, 10, 2, 10
+4, 41, 10, 2, 10
+5, 40, 10, 2, 10
+6, 45, 10, 3, 10
+7, 44, 10, 2, 10
+8, 40, 10, 2, 10
+9, 45, 10, 2, 10
+16. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+1, 101, 10, 3, 10
+2, 98, 10, 2, 10
+3, 93, 10, 3, 10
+4, 99, 10, 2, 10
+5, 72, 10, 2, 10
+6, 98, 10, 2, 10
+7, 98, 10, 3, 10
+8, 77, 10, 20, 10
+9, 70, 10, 17, 10
+17. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+1, 152, 10, 18, 10
+2, 68, 0, 6374, 0
+3, 96, 10, 11, 10
+4, 66, 0, 974, 0
+5, 104, 10, 9, 10
+6, 67, 0, 962, 0
+7, 96, 10, 9, 10
+8, 66, 0, 964, 0
+9, 55, 10, 4, 10
+19. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 201, 10, 11, 10
+1, 4, 10, 7, 10
+2, 4, 10, 6, 10
+3, 3, 10, 6, 10
+4, 4, 10, 5, 10
+20. How long does it take for the written records to reflect
+1, 1
+21. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned
+0, 113, 31, 3761, 121
+1, 28, 31, 3870, 121
+2, 30, 31, 3697, 121
+3, 18, 31, 3596, 121
+4, 18, 31, 3594, 121
+----- End Tests -----
