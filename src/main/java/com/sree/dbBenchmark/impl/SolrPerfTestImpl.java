@@ -120,14 +120,14 @@ public class SolrPerfTestImpl implements PerfTest{
     solrQuery.setStart(0);
     solrQuery.setRows(0);
     solrQuery.setFacet(true);
-    solrQuery.addFacetField("status", "queueName", "isDDL", "tablesWritten");
+    solrQuery.addFacetField("status", "queueName", "tablesWritten");
 
     PerfData perfData = new PerfData();
 
     QueryResponse response = solr.query(solrQuery);
     List<FacetField> result = response.getFacetFields();
 
-    perfData.data = result.get(0).getValueCount() + result.get(1).getValueCount() + result.get(2).getValueCount() + result.get(3).getValueCount();
+    perfData.data = result.get(0).getValueCount() + result.get(1).getValueCount() + result.get(2).getValueCount();
     perfData.registerEvent();
 
     return perfData;

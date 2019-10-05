@@ -140,22 +140,17 @@ public class PostgresPerfTestImpl implements PerfTest{
     perfData.data = 0;
 
     Statement stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-    result = stmt.executeQuery("select count(1) as cnt, status from dag where userName='userName1' GROUP BY status ORDER BY cnt DESC");
-    result.last();
-    perfData.data += result.getRow();
+    result = stmt.executeQuery("(select count(1) as cnt, status, null AS queueName, null AS tablesWritten from dag where userName='userName1' GROUP BY status ORDER BY cnt DESC)" +
+        "UNION ALL\n" +
+        "(select count(1) as cnt, null AS status, queueName, null AS tablesWritten from dag where userName='userName1' GROUP BY queueName ORDER BY cnt DESC)\n" +
+        "UNION ALL\n" +
+        "(select count(1) as cnt, null AS status, null AS queueName, unnest(tablesWritten) tablesWritten from dag where userName='userName1' GROUP BY tablesWritten ORDER BY cnt DESC)\n");
 
-    stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-    result = stmt.executeQuery("select count(1) as cnt, queueName from dag where userName='userName1' GROUP BY queueName ORDER BY cnt DESC");
-    result.last();
-    perfData.data += result.getRow();
-
-    stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-    result = stmt.executeQuery("select count(1) as cnt, isDDL from dag where userName='userName1' GROUP BY isDDL ORDER BY cnt DESC");
-    result.last();
-    perfData.data += result.getRow();
-
-    stmt = postgres.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-    result = stmt.executeQuery("select count(1) as cnt, tablesWritten from dag where userName='userName1' GROUP BY tablesWritten ORDER BY cnt DESC");
+//    result = stmt.executeQuery("(select count(1) as cnt, status, null AS queueName, null AS tablesWritten from dag where userName='userName1' GROUP BY status ORDER BY cnt DESC)\n" +
+//        "UNION ALL\n" +
+//        "(select count(1) as cnt, null AS status, queueName, null AS tablesWritten from dag where userName='userName1' GROUP BY queueName ORDER BY cnt DESC)\n" +
+//        "UNION ALL\n" +
+//        "(select count(1) as cnt, null AS status, null AS queueName, unnest(tablesWritten) tablesWritten from dag where userName='userName1' GROUP BY tablesWritten ORDER BY cnt DESC)\n");
     result.last();
     perfData.data += result.getRow();
 

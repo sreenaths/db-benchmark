@@ -58,7 +58,7 @@ public class Tests {
   }
 
   public void readTests(List<PerfTest> perfTests) throws InterruptedException, IOException, SolrServerException, SQLException {
-
+/*
     // -- Exact match --
     // 1. All dag by user name (We have userName0-userName9 )
     System.out.println("1. Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned");
@@ -222,7 +222,7 @@ public class Tests {
 
       System.out.printf("%d, %d, %d, %d, %d\n", i, perfDataS.getTotalDelay(), perfDataS.data, perfDataP.getTotalDelay(), perfDataP.data);
     }
-
+*/
     // -- Others --
     // 20. How long does it take for the written records to reflect in the data searched.
     System.out.println("20. How long does it take for the written records to reflect");

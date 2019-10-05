@@ -26,21 +26,21 @@ public class Main {
     System.out.println("-- Starting Tests --");
 
     // Single threaded tests
-//    Tests tests = new Tests();
-//    List<PerfTest> perfTests = getPerfTestImpls();
+    Tests tests = new Tests();
+    List<PerfTest> perfTests = getPerfTestImpls();
 //    tests.writeTests(perfTests);
-//    tests.readTests(perfTests);
-//    perfTests.get(1).close();
+    tests.readTests(perfTests);
+    perfTests.get(1).close();
 
     // Multithreaded tests
-    System.out.println("----- Concurrent Tests -----");
-
-    System.out.println("Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned");
-    int i;
-    for(i = 0; i < 50; i++) {
-      new ConcurrentTests(random.nextInt(10), i, getPerfTestImpls());
-    }
-    System.out.println("Created " + i + "threads");
+//    System.out.println("----- Concurrent Tests -----");
+//
+//    System.out.println("Search No, Solr Read Delay, Solr Records Returned, PG Read Delay, PG Records Returned");
+//    int i;
+//    for(i = 0; i < 50; i++) {
+//      new ConcurrentTests(random.nextInt(10), i, getPerfTestImpls());
+//    }
+//    System.out.println("Created " + i + "threads");
 
     System.out.println("----- End Tests -----");
   }
